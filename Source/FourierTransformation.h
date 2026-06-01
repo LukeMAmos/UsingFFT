@@ -39,9 +39,11 @@ public:
         writePosition = (writePosition + inputSamples.getNumSamples()) % buffer.size();
     }
     
-    float bufferValue(int samplePos){
+    float orderedSamples(int positionInOrder){
+        //getting the samples in order from oldest to newest no matter when in the circular buffer they are
+        //The relationship of write position and oldestSample is writePos + 1 , so for an input of position we must return buffer [writepos +1 + position ]
         
-        return buffer[samplePos];
+        return buffer[(writePosition + 1 + positionInOrder)%buffer.size()]; 
     }
     
 private:
