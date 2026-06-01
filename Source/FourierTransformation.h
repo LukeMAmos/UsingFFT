@@ -99,9 +99,12 @@ public:
             orderedBuffer[i] = circBuffer.orderedSamples(i) * windowing[i];
         }
         
+        complexOut = calcFFT(orderedBuffer);
+        complexOut.resize(fftSize / 2); //Only want the first half of the fft the rest is unwanted data 
+        
     }
     
-    std::vector<Complex> calcFFT(std::vector<float> input){
+    std::vector<Complex> calcFFT(std::vector<float> &input){
         
         //Base case if the size of the input is 1 then return itself as a complex number
         if(input.size() == 1 ){
@@ -123,11 +126,40 @@ public:
             }
         }
         
+        //Recursivly calling the function to fill it from the bottom up
         std::vector<Complex> E = calcFFT(even);
         std::vector<Complex> O = calcFFT(odd);
         
+        std::vector<Complex> result(input.size());
+        
+        for(int k = 0 ; k < input.size()/ 2 ;k++ ){
+            
+            float angle = -(2 * M_PI) * k/input.size(); //Calculate the angle
+            
+            Complex W = { .imaginary = std::sin(angle) , .real = std::cos(angle) }; //  W_k = e^{-i * 2pi * k/n}, this is then using eulers rule to calculate teh cos and sin parts
+            
+            Complex temp; // from the notes this is just W * O[k]
+            temp.real = W.real * O[k].real - W.imaginary * O[k].imaginary; // when completing complex mult real = ac - bd , imaginary = ad + bc
+            temp.imaginary =  W.real * O[k].imaginary + W.imaginary * O[k].real;
+            //So then result becomes
+            
+            result[k] = {E[k].real + temp.real, E[k].imaginary + temp.imaginary};
+            result[k + (input.size() / 2)] = {E[k].real - temp.real ,E[k].imaginary - temp.imaginary }; //Identical but signs flipped
+        }
+        
+        return result;
     }
 
+    float getMagnitude(int binIndex){
+        
+        return std::sqrt( std::pow(complexOut[binIndex].real, 2) + std::pow(complexOut[binIndex].imaginary, 2));
+    }
+    
+    float getPhase(int binIndex){
+        
+        return std::atan2(complexOut[binIndex].imaginary, complexOut[binIndex].real);
+    }
+    
     
 private:
     
