@@ -167,6 +167,9 @@ public:
         return 20.0f * std::log10( std::max(getMagnitude(binIndex), 0.0000001f) );
     }
     
+    int getFFTSize(){
+        return fftSize;
+    }
     
 private:
     

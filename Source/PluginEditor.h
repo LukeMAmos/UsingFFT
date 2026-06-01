@@ -15,7 +15,7 @@
 //==============================================================================
 /**
 */
-class UsingFFTAudioProcessorEditor  : public juce::AudioProcessorEditor
+class UsingFFTAudioProcessorEditor  : public juce::AudioProcessorEditor , public juce::Timer
 {
 public:
     UsingFFTAudioProcessorEditor (UsingFFTAudioProcessor&);
@@ -24,7 +24,8 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-    
+    //==============================================================================
+    void timerCallback() override; 
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -32,7 +33,7 @@ private:
     //Custom look and feel
     CustomLookAndFeel customLook;
     
-    void drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds);
+    void drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds, juce::Colour colour);
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UsingFFTAudioProcessorEditor)
 };
