@@ -100,13 +100,14 @@ public:
         }
         
         complexOut = calcFFT(orderedBuffer);
-        complexOut.resize(fftSize / 2); //Only want the first half of the fft the rest is unwanted data 
+        complexOut.resize(fftSize / 2); //Only want the first half of the fft the rest is unwanted data
         
     }
     
     std::vector<Complex> calcFFT(std::vector<float> &input){
         
-        //Base case if the size of the input is 1 then return itself as a complex number
+        //Base case if the size of the input is 1 then return itself as a complex number and begin the butterfly calculations
+        //If the size is bigger than 1 then split and recurse until it reaches 1
         if(input.size() == 1 ){
             
             return { Complex{ input[0], 0.0f } };
@@ -126,10 +127,11 @@ public:
             }
         }
         
-        //Recursivly calling the function to fill it from the bottom up
+        //Recursivly calling the function to fill it from the bottom up, the first call stops here until it reaches input.size() ==1 whereby it finally reaches a return value and begins the below functions inside the even and odd functions which build back up applying the butterfly computation as it goes
         std::vector<Complex> E = calcFFT(even);
         std::vector<Complex> O = calcFFT(odd);
         
+        //Once both Even and Odd recursive functions are finished above we finally complete the final recursion of combining the Even and Odd to get the final result
         std::vector<Complex> result(input.size());
         
         for(int k = 0 ; k < input.size()/ 2 ;k++ ){
