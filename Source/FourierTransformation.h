@@ -162,6 +162,11 @@ public:
         return std::atan2(complexOut[binIndex].imaginary, complexOut[binIndex].real);
     }
     
+    float getMagnitudeDb(int binIndex){ //return the magnitude in dB , helpful for use in displaying the data in the frequency domain 
+        
+        return 20.0f * std::log10( std::max(getMagnitude(binIndex), 0.0000001f) );
+    }
+    
     
 private:
     

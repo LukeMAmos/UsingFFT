@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="yY6jUV" name="UsingFFT">
     <GROUP id="{FDA55011-75BC-5004-9141-8AD9444E60B0}" name="Source">
+      <FILE id="i9Ii1n" name="CustomLookAndFeel.h" compile="0" resource="0"
+            file="Source/CustomLookAndFeel.h"/>
       <FILE id="lXwt2i" name="FourierTransformation.h" compile="0" resource="0"
             file="Source/FourierTransformation.h"/>
       <FILE id="EUWTN7" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -14,6 +16,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="A82b0y" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="m23HhY" name="BitcountPropSingle.ttf" compile="0" resource="1"
+          file="../../../../Documents/Fonts/BitcountPropSingle.ttf"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

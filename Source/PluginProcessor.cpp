@@ -136,7 +136,8 @@ void UsingFFTAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     
-    fourierTrans.process(buffer); 
+    //Run the fourier transform on the incoming buffer , then use the data from this to display a frequency domain diagram 
+    fourierTrans.process(buffer);
 
     
 }
