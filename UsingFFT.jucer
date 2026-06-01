@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="yY6jUV" name="UsingFFT">
     <GROUP id="{FDA55011-75BC-5004-9141-8AD9444E60B0}" name="Source">
+      <FILE id="lXwt2i" name="FourierTransformation.h" compile="0" resource="0"
+            file="Source/FourierTransformation.h"/>
       <FILE id="EUWTN7" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="YCDuYN" name="PluginProcessor.h" compile="0" resource="0"
