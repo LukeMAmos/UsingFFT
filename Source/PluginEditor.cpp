@@ -36,3 +36,8 @@ void UsingFFTAudioProcessorEditor::resized()
 }
 
 
+void UsingFFTAudioProcessorEditor::drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds)
+{
+    //Function for drawing the FFT
+    //using the bounds of the rectangle and jmap function to decide where to draw the lines 
+}
