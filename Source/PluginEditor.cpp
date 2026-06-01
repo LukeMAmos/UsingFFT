@@ -15,7 +15,7 @@ UsingFFTAudioProcessorEditor::UsingFFTAudioProcessorEditor (UsingFFTAudioProcess
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be
-    setSize (800, 800);
+    setSize (1000, 850);
     setLookAndFeel(&customLook);
     
     
@@ -25,6 +25,7 @@ UsingFFTAudioProcessorEditor::UsingFFTAudioProcessorEditor (UsingFFTAudioProcess
 
 UsingFFTAudioProcessorEditor::~UsingFFTAudioProcessorEditor()
 {
+    setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -34,9 +35,10 @@ void UsingFFTAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll(juce::Colours::black);
     
     juce::Rectangle<int> bounds;
-    bounds.setBounds(50, 50, 400, 400);
+    bounds.setBounds(25, 25, 950, 800);
     
     drawFFT(g, audioProcessor.fourierTrans, bounds , juce::Colours::white);
+    DBG("Drawing FFT");
 }
 
 void UsingFFTAudioProcessorEditor::resized()
@@ -52,20 +54,31 @@ void UsingFFTAudioProcessorEditor::drawFFT(juce::Graphics &g , FFT& fftToDraw, j
     //using the bounds of the rectangle and jmap function to decide where to draw the lines
     g.setColour(colour);
     
+    {
+        juce::ScopedLock lock(audioProcessor.criticalSection);
+        snapshot = fftToDraw.getComplexOut();
+    }
+    
     //Drawing the Lines
     //For each xPos pixel inside the bar decide what binIndex they should represent , which means larger rectangles have a higehr resolution
-    for(int xPos = bounds.getX() ; xPos < bounds.getTopRight().x ; xPos++){
+    auto plotArea = bounds.reduced(10);
+    for(int xPos = plotArea.getX() ; xPos < plotArea.getTopRight().x ; xPos++){
         
-        int binIndex = jmap(xPos, bounds.getX(), bounds.getTopRight().x ,0, (fftToDraw.getFFTSize() / 2));
+        int binIndex = jmap(xPos, plotArea.getX(), plotArea.getRight(), 0, fftToDraw.getFFTSize() / 2);
         
+        float snapShotMag = std::sqrt( std::pow(snapshot[binIndex].real, 2) + std::pow(snapshot[binIndex].imaginary, 2));
+        float snapShotValDB = 20.0f * std::log10( std::max(snapShotMag, 0.0000001f) );
         //Using the magnitude value to calculate where the line should start at
-        int yStart = (int)jmap(fftToDraw.getMagnitudeDb(binIndex), -100.0f, 0.0f, (float)bounds.getTopRight().y , (float)bounds.getBottom());
+        float magnitudeDB = jlimit(-100.0f, 0.0f,snapShotValDB);
         
-        g.drawRect(xPos, yStart, 1, bounds.getBottom() - yStart);
+        int yStart = (int)jmap(magnitudeDB, -100.0f, 0.0f , (float)plotArea.getBottom(), (float)plotArea.getY());
+        
+        
+        g.fillRect(xPos, yStart, 1, plotArea.getBottom() - yStart);
     }
     
     //Draw a box around the lines
-    
+    g.drawRect(bounds); 
     //Label the axis
 }
 

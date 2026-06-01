@@ -136,7 +136,7 @@ public:
         
         for(int k = 0 ; k < input.size()/ 2 ;k++ ){
             
-            float angle = -(2 * M_PI) * k/input.size(); //Calculate the angle
+            float angle = -(2 * M_PI) * k/input.size(); //Calculate the angle, neg flips the sine component which is needed in a forward DFT
             
             Complex W = { .imaginary = std::sin(angle) , .real = std::cos(angle) }; //  W_k = e^{-i * 2pi * k/n}, this is then using eulers rule to calculate teh cos and sin parts
             
@@ -154,7 +154,11 @@ public:
 
     float getMagnitude(int binIndex){
         
-        return std::sqrt( std::pow(complexOut[binIndex].real, 2) + std::pow(complexOut[binIndex].imaginary, 2));
+        if(binIndex < complexOut.size()){
+            return std::sqrt( std::pow(complexOut[binIndex].real, 2) + std::pow(complexOut[binIndex].imaginary, 2));
+        }else{
+            return -0.0f;
+        }
     }
     
     float getPhase(int binIndex){
@@ -164,6 +168,7 @@ public:
     
     float getMagnitudeDb(int binIndex){ //return the magnitude in dB , helpful for use in displaying the data in the frequency domain 
         
+
         return 20.0f * std::log10( std::max(getMagnitude(binIndex), 0.0000001f) );
     }
     
@@ -171,6 +176,10 @@ public:
         return fftSize;
     }
     
+    std::vector<Complex> getComplexOut(){
+        
+        return complexOut;
+    }
     
 private:
     

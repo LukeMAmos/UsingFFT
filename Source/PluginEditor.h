@@ -33,6 +33,8 @@ private:
     //Custom look and feel
     CustomLookAndFeel customLook;
     
+    std::vector<Complex> snapshot;
+    
     void drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds, juce::Colour colour);
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UsingFFTAudioProcessorEditor)
