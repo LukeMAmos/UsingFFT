@@ -171,6 +171,7 @@ public:
         return fftSize;
     }
     
+    
 private:
     
     CircBuff circBuffer;

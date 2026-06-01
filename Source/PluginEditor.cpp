@@ -53,17 +53,20 @@ void UsingFFTAudioProcessorEditor::drawFFT(juce::Graphics &g , FFT& fftToDraw, j
     g.setColour(colour);
     
     //Drawing the Lines
-    int Xwidth = bounds.getWidth() / (fftToDraw.getFFTSize() / 2);
-    for(int i = 0 ; i < fftToDraw.getFFTSize() / 2 ; i++){
-    
-        int barTopY = jmap(fftToDraw.getMagnitudeDb(i), -100.0f, 0.0f, (float)bounds.getBottom(), (float)bounds.getY());
+    //For each xPos pixel inside the bar decide what binIndex they should represent , which means larger rectangles have a higehr resolution
+    for(int xPos = bounds.getX() ; xPos < bounds.getTopRight().x ; xPos++){
         
-        g.fillRect(i*Xwidth, barTopY , Xwidth, bounds.getBottom() - barTopY);
+        int binIndex = jmap(xPos, bounds.getX(), bounds.getTopRight().x ,0, (fftToDraw.getFFTSize() / 2));
+        
+        //Using the magnitude value to calculate where the line should start at
+        int yStart = (int)jmap(fftToDraw.getMagnitudeDb(binIndex), -100.0f, 0.0f, (float)bounds.getTopRight().y , (float)bounds.getBottom());
+        
+        g.drawRect(xPos, yStart, 1, bounds.getBottom() - yStart);
     }
     
     //Draw a box around the lines
     
-    //Label the axis 
+    //Label the axis
 }
 
 void UsingFFTAudioProcessorEditor::timerCallback()
