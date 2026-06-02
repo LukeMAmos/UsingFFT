@@ -1,5 +1,5 @@
 # Implementing the Fourier Transformation 
-To help undertand the fourier transformation and its implementation in audio, research into the function and its computation was completed with a final project of implementing the FFT in JUCE. 
+To help undertand the fourier transformation and its implementation in audio, research into the function and its computation was completed with a final project of implementing a simple frequency domain graph. Through this project a deeper understanding of how the Discrete Fourier Transform works and how a Fast Fourier Transformation is implemented inside a JUCE plugin. 
 
 ## Files 
 - Research notes , including steps on how to implement the transform function
