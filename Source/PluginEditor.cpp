@@ -50,6 +50,8 @@ void UsingFFTAudioProcessorEditor::resized()
 
 void UsingFFTAudioProcessorEditor::drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds , juce::Colour colour)
 {
+    float dBPoints[5]{0.0f , -5.0f , -20.0f , -60.0f , -100.0f};
+    float freqHzPoints[12]{0.0f , 20.0f , 40.0f , 80.0f , 160.0f , 320.0f , 640.0f , 1280.0f , 2560.0f , 5120.0f , 10240.0f , 20000.0f };
     //Function for drawing the FFT
     //using the bounds of the rectangle and jmap function to decide where to draw the lines
     g.setColour(colour);
