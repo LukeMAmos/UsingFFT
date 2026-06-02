@@ -35,6 +35,9 @@ private:
     
     std::vector<Complex> snapshot;
     
+    float minFreq = 20.0f;
+    float maxFreq = 20000.0f;
+    
     void drawFFT(juce::Graphics &g , FFT& fftToDraw, juce::Rectangle<int> bounds, juce::Colour colour);
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (UsingFFTAudioProcessorEditor)
