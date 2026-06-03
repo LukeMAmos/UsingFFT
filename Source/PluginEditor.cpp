@@ -76,10 +76,10 @@ void UsingFFTAudioProcessorEditor::drawFFT(juce::Graphics &g , FFT& fftToDraw, j
     
     for(int xPos = plotArea.getX() ; xPos < plotArea.getTopRight().x ; xPos++){
         
-        float t = (float)(xPos - plotArea.getX()) / (float)plotArea.getWidth();
-        float freq = minFreq * std::pow(maxFreq / minFreq , t);
+        float t = (float)(xPos - plotArea.getX()) / (float)plotArea.getWidth(); // t is a position value from 0 to 1 , where between the min and max are we ?
+        float freq = minFreq * std::pow(maxFreq / minFreq , t); // using that value 
 
-        int binIndex = (int)(freq * fftSize/sampleRate);
+        int binIndex = (int)(freq * fftSize/sampleRate); // the bin index to use is equal to the freq * fftsize / sampleRate
         binIndex = jlimit(0, fftSize/2 -1 , binIndex);
         
         float snapShotMag = std::sqrt( std::pow(snapshot[binIndex].real, 2) + std::pow(snapshot[binIndex].imaginary, 2));
