@@ -134,7 +134,7 @@ public:
         //Once both Even and Odd recursive functions are finished we combine their results on every level on the way back up , If looking from the top down the deepest level combines size-1 base cases into size-2 results until the top level produces the final full output.
         std::vector<Complex> result(input.size());
         
-        for(int k = 0 ; k < input.size()/ 2 ;k++ ){
+        for(int k = 0 ; k < input.size()/ 2 ;k++ ){ //The loop runs for half the fft because the first half twiddle values are used to calculate the second half 
             
             float angle = -(2 * M_PI) * k/input.size(); //Calculate the angle, neg flips the sine component which is needed in a forward DFT
             
